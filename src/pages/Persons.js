@@ -14,7 +14,7 @@ export default function Persons() {
   const [modalShow, setModalShow] = useState(false);
   const [personId, setPersonId] = useState(false);
   const navigate = useNavigate();
-  const [pageMessage, setPageMessage] = useState({'code':'','msg':''});
+  const [pageMessage, setPageMessage] = useState();
 
 
   function toggleShowModal(){
@@ -80,7 +80,7 @@ export default function Persons() {
       if (!response.ok) {
         if(response.status === 400){
           setError(true);
-          setPageMessage({code: '2', msg: 'Oh no! Something went wrong.'});
+          setPageMessage({code: 3, mcode: 300});
         }
         throw new Error("Something went wrong.");
       }
@@ -89,7 +89,7 @@ export default function Persons() {
     .then( (data) => {
       toggleShowModal();
       setPersons([...persons, data.person]) //this will show new data added without reloading the whole page
-      setPageMessage({code: '1', msg: 'New record has been added.'});
+      setPageMessage({code: 1, mcode: 100});
     } )
     .catch((e) => {
       console.log(e);
@@ -116,7 +116,7 @@ export default function Persons() {
     } )
     .then( (data) => {
         setDeleted(true);
-        setPageMessage({code: '3', msg: 'Record removed succesfully.'});
+        setPageMessage({code: 2, mcode: 200});
     } )
     .catch( (e) => {
       console.log(e);

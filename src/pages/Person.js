@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { baseUrl8000 } from "../shared";
 import { useEffect, useState } from "react";
+import ErrorMessages from "../components/ErrorMessages";
 
 
 export default function Person() {
@@ -9,8 +10,8 @@ export default function Person() {
   const [person, setPerson] = useState();
   const [tempPerson, setTempPerson] = useState();
   const [changed, setChanged] = useState(false);
-  const [errormsg, setError] = useState(false);
   const [savedMsg, setSavedMsg] = useState(false);
+  const [pageMessage, setPageMessage] = useState();
   
   //show and hide Save button
   useEffect( () => {
@@ -19,7 +20,7 @@ export default function Person() {
     if(person.name !== tempPerson.name) equal=false;
     if(person.company !== tempPerson.company) equal=false;
     if(equal) setChanged(false);
-  } )
+  },[person] )
 
   useEffect(() => {
     const url = baseUrl8000 + "api/persons/"+id;
@@ -68,7 +69,7 @@ export default function Person() {
     .then( (response) => {
       if(!response.ok){
         if( response.status === 400 ){
-          setError(true);
+          setPageMessage({code: 3, mcode: 300});
         }
         throw new Error('Something went wrong.');
       }
@@ -77,6 +78,7 @@ export default function Person() {
     .then( (data) => {
       setPerson(data.person);
       setSavedMsg(true);
+      setPageMessage({code: 1, mcode: 101});
       //console.log(person)
     } )
     .catch( (e) => {
@@ -88,9 +90,7 @@ export default function Person() {
     <>
       <h4 className="pb-3">Edit Record</h4>
 
-
-      {errormsg ? <><div class="alert alert-danger"><b>Oh no!</b> Something went wrong.</div></> : null }
-      {savedMsg ? <><div class="alert alert-success"><b>Changes are saved.</b></div></> : null }
+      <ErrorMessages pageMessage={pageMessage} />
 
       <form>
           {person ? (<>
