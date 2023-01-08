@@ -81,6 +81,7 @@ export default function Persons() {
         if(response.status === 400){
           setError(true);
           setPageMessage({code: 3, mcode: 300});
+          toggleShowModal();
         }
         throw new Error("Something went wrong.");
       }

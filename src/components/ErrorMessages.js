@@ -1,10 +1,15 @@
+import { useEffect, useState } from "react";
+
 export default function ErrorMessages(props){
+
+    const [closebtn, setClosebtn] = useState(false);
+
+
     if( props.pageMessage ){
 
-    const code = props.pageMessage.code;
-    const mcode = props.pageMessage.mcode;
-    let msg = '';
-
+        const code = props.pageMessage.code;
+        const mcode = props.pageMessage.mcode;
+        let msg = '';
 
         //ERROR MESSAGES HERE
 
@@ -20,9 +25,12 @@ export default function ErrorMessages(props){
 
 
         //shared button
+        //pending functionality to dismiss message
         function closeButton(){
             return (
-                <button className="float-right">
+                <button 
+                    className="float-right"
+                    onClick={ () => { setClosebtn(true) } }>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -38,20 +46,26 @@ export default function ErrorMessages(props){
     
         //ERROR CODES HERE
 
-        //success
-        if( code === 1 ){
-            return <div className={"bg-green-100 text-green-800 border-green-500"+errorClasses()}> {msg} {closeButton()}</div>
+        if( !closebtn ){
+
+            //success
+            if( code === 1 ){
+                return <div className={"bg-green-100 text-green-800 border-green-500"+errorClasses()}> {msg} </div>
+            }
+            
+            //errors
+            else if( code === 2 ){
+                return <div className={"bg-red-100 text-red-800 border-red-500"+errorClasses()}> {msg} </div>
+            }
+    
+            //warnings
+            else if( code === 3 ){
+                return <div className={"bg-orange-100 text-orange-500 border-orange-500"+errorClasses()}> {msg} </div>
+            }
+
+
         }
         
-        //errors
-        else if( code === 2 ){
-            return <div className={"bg-red-100 text-red-800 border-red-500"+errorClasses()}> {msg} {closeButton()}</div>
-        }
-
-        //warnings
-        else if( code === 3 ){
-            return <div className={"bg-orange-100 text-orange-500 border-orange-500"+errorClasses()}> {msg} {closeButton()}</div>
-        }
 
 
             

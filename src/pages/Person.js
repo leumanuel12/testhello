@@ -20,7 +20,7 @@ export default function Person() {
     if(person.name !== tempPerson.name) equal=false;
     if(person.company !== tempPerson.company) equal=false;
     if(equal) setChanged(false);
-  },[person] )
+  } )
 
   useEffect(() => {
     const url = baseUrl8000 + "api/persons/"+id;
@@ -131,7 +131,7 @@ export default function Person() {
       </form>
       <div className='mx-auto mt-3'>
 
-        {savedMsg ? (
+        {savedMsg && !changed ? (
           <button className="m-2 px-[8%] py-2 font-medium text-white hover:font-bold bg-green-500 hover:bg-green-600"
             onClick={ () => {
               navigate('/persons');
