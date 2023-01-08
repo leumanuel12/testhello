@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 
 const navigation = [
   { name: "Persons", href: "/persons" },
-  { name: "Placeholder", href: "/Placeholder" },
-  { name: "Placeholder", href: "/Placeholder2" },
+  { name: "Placeholder1", href: "/Placeholder1" },
+  { name: "Placeholder2", href: "/Placeholder2" },
 ];
 
 function classNames(...classes) {
@@ -91,7 +91,7 @@ export default function Header(props) {
         )}
       </Disclosure>
       <div className="bg-gray-200 min-h-screen">
-        <div className="max-w-7xl mx-auto pt-4">
+        <div className="mx-auto pt-4 px-10 py-3 max-w-6xl mx-auto">
           {props.children}
         </div>
       </div>

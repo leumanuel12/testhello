@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ModalTitle } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import ErrorMessages from './ErrorMessages';
 
 
 export default function AddPerson(props) {
@@ -35,10 +36,8 @@ export default function AddPerson(props) {
         </Modal.Header>
         <Modal.Body>
         
-            {props.errormsg ? <><div class="alert alert-danger"><strong>Oh no!</strong> {props.errormsg}</div></> : null }
-         
+
           <form 
-            className="tbl-form m-3 mx-auto justify-center border-spacing-2 border-separate"
             id="edit-form"
             onSubmit={(e) => {
                 e.preventDefault();
@@ -46,7 +45,8 @@ export default function AddPerson(props) {
                 setCompany('');
                 props.addNewPerson(name, company);
             }}>
-                <tr className=''>
+              <table className="tbl-form m-3 mx-auto justify-center border-spacing-2 border-separate">
+                <tr>
                     <td className='px-3'>Name</td>
                     <td className='px-3'>
                         <input
@@ -68,6 +68,7 @@ export default function AddPerson(props) {
                             } }/>
                     </td>
                 </tr>
+                </table>
             </form>
             <div className='mx-auto flex justify-center mt-5'>
                 <button className="px-[20%] py-2 mx-auto bg-red-500 font-medium text-white hover:bg-red-600 hover:font-bold" onClick={props.toggleShowModal}>Cancel</button>
