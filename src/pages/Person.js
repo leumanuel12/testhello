@@ -94,12 +94,14 @@ export default function Person() {
 
       <form>
           {person ? (<>
-          <table className="tbl-form p-5 border-spacing-2 border-separate border-2 border-solid border-gray-300">
-            <tbody>
-            <tr>
-                <td className='px-3'>Name</td>
-                <td className='px-3'>
+              <div className="max-w-lg m-4 p-5 border-2 border-solid border-gray-300">
+                <div className="md:flex md:items-center m-3">
+                  <div className="md:w-1/4">
+                    <label for="name">Name</label>
+                  </div>
+                  <div className="md:w-1/4">
                     <input
+                        id="name"
                         type="text"
                         className='flex shrink min-w-0 border-2 border-solid border-gray-300 rounded-md px-3'
                         value={tempPerson.name}
@@ -108,31 +110,34 @@ export default function Person() {
                             //console.log(tempPerson.name)
                             setChanged(true);
                         } }/>
-                </td>
-            </tr>
-            <tr>
-                <td className='px-3'>Company</td>
-                <td className='px-3'>
-                    <input
-                        type="text"
-                        className='flex shrink min-w-0 border-2 border-solid border-gray-300 rounded-md px-3'
-                        value={tempPerson.company}
-                        onChange={ (e) => {
-                          setTempPerson({...tempPerson, company: e.target.value});
-                          //console.log(tempPerson.company)
-                          setChanged(true);
-                        } }/>
-                </td>
-            </tr>
-            </tbody>
-          </table>
+                    </div>
+                  </div>
+                  <div className="md:flex md:items-center m-3">
+                    <div className="md:w-1/4">
+                      <label for="company">Company</label>
+                    </div>
+                    <div className="md:w-1/4">
+                      <input
+                          id="company"
+                          type="text"
+                          className='flex shrink min-w-0 border-2 border-solid border-gray-300 rounded-md px-3'
+                          value={tempPerson.company}
+                          onChange={ (e) => {
+                            setTempPerson({...tempPerson, company: e.target.value});
+                            //console.log(tempPerson.company)
+                            setChanged(true);
+                          } }/>
+                    </div>
+                  </div>
+              </div>
+
           </>) : null }
           
       </form>
-      <div className='mx-auto mt-3'>
+      <div className='mt-3 md:flex ml-12'>
 
         {savedMsg && !changed ? (
-          <button className="m-2 px-[8%] py-2 font-medium text-white hover:font-bold bg-green-500 hover:bg-green-600"
+          <button className="m-2 px-[8%] py-2 font-medium text-white hover:font-bold bg-blue-500 hover:bg-blue-600"
             onClick={ () => {
               navigate('/persons');
             } }>Back</button>

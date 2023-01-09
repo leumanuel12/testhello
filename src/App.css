@@ -4,9 +4,3 @@
 .btn-addrecord{
     float: right;
 }
-
-@media only screen and (max-width: 400px) {
-    .tbl-form > tr > td{
-      display: block;
-    }
-  }
