@@ -10,7 +10,7 @@ export default function NotFound(){
         <div className="flex justify-center">
         </div>
         <div className="flex justify-center">
-        <h2>Content not found</h2>
+        <h2>NO CONTENT FOUND</h2>
         </div>
         </>
         
