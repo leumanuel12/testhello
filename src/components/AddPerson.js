@@ -44,7 +44,7 @@ export default function AddPerson(props) {
               setCompany("");
               props.addNewPerson(name, company);
             }}
-          >
+            >
             <div className="m-3">
               <div className="m-4 sm:flex sm:items-center">
                 <div className="w-1/3">

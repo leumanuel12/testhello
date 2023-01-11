@@ -1,0 +1,3 @@
+ISSUES ENCOUNTERED WHILE TESTING
+
+011123 (pending) - Headers will show the navlinks when credentials are incorrect upon login and will show logout button

@@ -28,6 +28,7 @@ export default function Person() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization : 'Bearer '+localStorage.getItem('access'),
       },
     })
       .then((response) => {
@@ -68,6 +69,7 @@ export default function Person() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization : 'Bearer '+localStorage.getItem('access'),
       },
       body: JSON.stringify(data),
     })
