@@ -5,21 +5,30 @@ import { useContext } from "react";
 import { LoginContext } from "../App";
 import ErrorMessages from "./ErrorMessages";
 
-export default function Login() {
+export default function Register() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
+
+    const [pageMessage, setPageMessage] = useState(false);
+
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
-    const [pageMessage, setPageMessage] = useState(false);
+    useEffect( () => {
+      //force logout user if existing user is loggedin
+      localStorage.clear();
+      setLoggedIn(false);
+    } )
 
 
-    function login(){
-        const url = baseUrl8000 + 'api/token/';
+    function register(){
+        const url = baseUrl8000 + 'api/register/';
         //console.log(url)
+        //console.log('registering....')
 
         fetch(url, {
             method: 'POST',
@@ -29,30 +38,33 @@ export default function Login() {
             body: JSON.stringify({
                 username: username,
                 password: password,
+                email: email,
             }),
         })
         .then( (response) => {
-          if( response.status === 401 ){
-            setLoggedIn(false);
-            localStorage.clear();
+          if(response.ok){
+            setPageMessage({ code: 1, mcode: 102 });
+            setEmail('');
+            setUserName('');
+            setPassword('');
           }
           return response.json();
         } )
         .then( (data) => {
-          localStorage.setItem('token', data);
-          localStorage.setItem('access', data.access);
-          localStorage.setItem('refresh', data.refresh);
-          //console.log(localStorage);
-          
-          //console.log(data.detail);
-          //I added this condition to prevent the headers from rendering into loggedin state even though the credentials are incorrect
-          //thus, checking first if theres error is necessary here before setting state to login true
-          if(!data.detail){
-            setLoggedIn(true); //added this so the Login/Logout text in headers will render properly
-            navigate(localStorage?.state?.previousUrl ? localStorage.state.previousUrl : '/persons');
-          } else {
-            setLoggedIn(false);
-            setPageMessage({ code: 2, mcode: data.detail });
+
+          //Instead of automatically redirecting user to a homepage,
+          //I decided to display a message that will ask the user to login first
+          //the Account created message was moved to the response because it seems that this here will still execute despite having error thrown for bad request
+
+          //console.log(data.email[0])
+          //console.log(data)
+          if(data.username){
+            //console.log(data.username[0])
+            setPageMessage({ code: 2, mcode: data.username[0] });
+          }
+          if(data.email){
+            //console.log(data.email[0])
+            setPageMessage({ code: 2, mcode: data.email[0] });
           }
           
         } )
@@ -67,11 +79,28 @@ export default function Login() {
         id="edit-form"
         onSubmit={(e) => {
           e.preventDefault();
-          login();
+          register();
         }}
       >
         <div className="max-w-md my-5 p-8 border-2 border-gray-300 mx-auto rounded-md">
         <ErrorMessages pageMessage={pageMessage} />
+          <div className="m-2 sm:flex sm:items-center">
+            <div className="w-1/3">
+              <label for="email">Email</label>
+            </div>
+            <div className="w-1/3">
+              <input
+                id="email"
+                type="text"
+                className="flex shrink min-w-0 border-2 border-solid border-gray-300 rounded-md px-3"
+                value={email}
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+          </div>
           <div className="m-2 sm:flex sm:items-center">
             <div className="w-1/3">
               <label for="username">Username</label>
@@ -111,7 +140,7 @@ export default function Login() {
               className="px-10 py-2 bg-green-500 font-medium text-white hover:bg-green-600 hover:font-bold"
               form="edit-form"
             >
-              Login
+              Register
             </button>
           </div>
         </div>

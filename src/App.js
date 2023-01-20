@@ -7,6 +7,7 @@ import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 import { createContext, useState, useEffect } from "react";
 import { baseUrl8000 } from "./shared";
+import Register from "./components/Register";
 
 export const LoginContext = createContext();
 
@@ -14,6 +15,7 @@ export const LoginContext = createContext();
 export default function App() {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
+  const [userLogged, setUserLogged] = useState();
 
   function changeLoggedIn(value){
     setLoggedIn(value);
@@ -25,7 +27,7 @@ export default function App() {
   function setTokens(){
     if (localStorage.refresh) { //we check first if we have tokens else refresh token fetch will run everytime even when not loggedin
       
-      console.log("refreshing token...");
+      //console.log("refreshing token...");
       const url = baseUrl8000 + "api/refresh/";
       //console.log(url);
 
@@ -72,6 +74,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Persons />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/persons" element={<Persons />} />
             <Route path="/persons/:id" element={<Person />} />
             <Route path="*" element={<NotFound />} />

@@ -12,17 +12,18 @@ export default function ErrorMessages(props){
         let msg = '';
 
         //ERROR MESSAGES HERE
+        if(isNaN(mcode)) msg = mcode; //overwrite with the custom message if value being pass is not a number or the stated codes below.
 
         //success - green
         if(mcode == 100) msg = 'New record has been added.';
         if(mcode == 101) msg = 'Changes are saved.';
+        if(mcode == 102) msg = 'Account has been created! You may login now.';
 
         //errors - red
         if(mcode == 200) msg = 'Record removed succesfully.';
 
         //warnings - orange
         if(mcode == 300) msg = 'Oh no! Something went wrong.';
-
 
         //shared button
         //pending functionality to dismiss message

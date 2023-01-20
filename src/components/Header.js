@@ -14,11 +14,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 export default function Header(props) {
   const navigate = useNavigate();
 
   const [loggedIn, setLoggedIn] = useContext(LoginContext);
+
+  useEffect( () => {
+    if(!loggedIn) setLoggedIn(false);
+  } )
 
   return (
     <>
@@ -78,13 +81,22 @@ export default function Header(props) {
                     Logout
                   </button>
                   ) : (
-                  <button
-                    className="px-3 py-2 text-white hover:border-2 hover:rounded-md"
-                    onClick={() => {
-                        navigate('/login');
-                    }}>
-                    Login
-                  </button>
+                  <>
+                    <button
+                      className="px-3 py-2 text-white hover:border-2 hover:rounded-md"
+                      onClick={() => {
+                          navigate('/register');
+                      }}>
+                      Register
+                    </button>
+                    <button
+                      className="px-3 py-2 text-white hover:border-2 hover:rounded-md"
+                      onClick={() => {
+                          navigate('/login');
+                      }}>
+                      Login
+                    </button>
+                  </>
                   )}
                 </div>
               </div>
@@ -115,7 +127,7 @@ export default function Header(props) {
         )}
       </Disclosure>
       <div className="bg-gray-200 min-h-screen">
-        <div className="mx-auto pt-4 px-10 py-3 max-w-6xl mx-auto">
+        <div className="mx-auto pt-4 px-10 py-3 max-w-6xl">
           {props.children}
         </div>
       </div>

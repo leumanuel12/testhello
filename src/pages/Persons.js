@@ -121,7 +121,7 @@ export default function Persons() {
 
   //DELETE A PERSON RECORD
   function deletePerson(id){
-    console.log('deleting record...');
+    //console.log('deleting record...');
     //console.log(id);
     const url = baseUrl8000 + 'api/persons/' +id;
     //console.log(url);

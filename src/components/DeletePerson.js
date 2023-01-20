@@ -16,7 +16,7 @@ export default function DeletePerson(props) {
             <p>{props.name}</p>
             <p>{props.company}</p>
         </div>
-        <div className='mx-auto mx-2 flex justify-center mt-5'>
+        <div className='mx-2 flex justify-center mt-5'>
             <button className="px-[18%] mx-1 py-2 bg-red-500 font-medium text-white hover:bg-red-600 hover:font-bold"
                 onClick={ () => {
                     props.toggleModalDelete();
