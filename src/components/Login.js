@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { baseUrl8000 } from "../shared";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { LoginContext } from "../App";
+import { LoginContext, UserContext } from "../App";
 import ErrorMessages from "./ErrorMessages";
 
 export default function Login() {
@@ -13,6 +13,7 @@ export default function Login() {
     const location = useLocation();
 
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
+    const [userLogged, setUserLogged] = useContext(UserContext);
 
     const [pageMessage, setPageMessage] = useState(false);
 
@@ -48,6 +49,7 @@ export default function Login() {
           //I added this condition to prevent the headers from rendering into loggedin state even though the credentials are incorrect
           //thus, checking first if theres error is necessary here before setting state to login true
           if(!data.detail){
+            setUserLogged(username);
             setLoggedIn(true); //added this so the Login/Logout text in headers will render properly
             navigate(localStorage?.state?.previousUrl ? localStorage.state.previousUrl : '/persons');
           } else {

@@ -10,23 +10,24 @@ import { baseUrl8000 } from "./shared";
 import Register from "./components/Register";
 
 export const LoginContext = createContext();
-
+export const UserContext = createContext();
 
 export default function App() {
-
   const [loggedIn, setLoggedIn] = useState(localStorage.access ? true : false);
   const [userLogged, setUserLogged] = useState();
 
-  function changeLoggedIn(value){
+  function changeLoggedIn(value) {
     setLoggedIn(value);
-    if( value === false ){
+    if (value === false) {
       localStorage.clear();
+      setUserLogged(false);
     }
   }
 
-  function setTokens(){
-    if (localStorage.refresh) { //we check first if we have tokens else refresh token fetch will run everytime even when not loggedin
-      
+  function setTokens() {
+    if (localStorage.refresh) {
+      //we check first if we have tokens else refresh token fetch will run everytime even when not loggedin
+
       //console.log("refreshing token...");
       const url = baseUrl8000 + "api/refresh/";
       //console.log(url);
@@ -62,25 +63,26 @@ export default function App() {
     const minute = 1000 * 60;
 
     setTokens(); //we invoke it at once so it will refresh the moment we login
-    
+
     setInterval(setTokens, minute * 3); //now refresh token will execute every 3 minutes on this case
   });
 
-
   return (
     <LoginContext.Provider value={[loggedIn, changeLoggedIn]}>
-      <BrowserRouter>
-        <Header>
-          <Routes>
-            <Route path="/" element={<Persons />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/persons" element={<Persons />} />
-            <Route path="/persons/:id" element={<Person />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Header>
-      </BrowserRouter>
+      <UserContext.Provider value={[userLogged, setUserLogged]}>
+        <BrowserRouter>
+          <Header>
+            <Routes>
+              <Route path="/" element={<Persons />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/persons" element={<Persons />} />
+              <Route path="/persons/:id" element={<Person />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Header>
+        </BrowserRouter>
+      </UserContext.Provider>
     </LoginContext.Provider>
   );
 }
